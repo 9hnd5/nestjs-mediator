@@ -5,69 +5,115 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+
+## Motivation
+[Nest](https://github.com/nestjs/nest) has a lightweight CQRS module that works very well but the problem is we can not inject the other provider with **scope-request** and that is the reason why this library has existed
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The nestjs-mediator supports request/response, command, query, and notification with exposing the ability to inject any** scope-request** provider
+
 
 ## Installation
 
 ```bash
-$ npm install
+$ npm install --save nestjs-mediator
 ```
-
-## Running the app
-
+or with yarn
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ yarn add nestjs-mediator
 ```
 
-## Test
+## Quick Start
+###Request/Response
+Define your query or command
+```javascript
+import { Request } from "nestjs-mediator"
+class TestCommand extends Request<string>{
+	//Your properties
+}
+```
+Then define your handler
 
-```bash
-# unit tests
-$ npm run test
+```javascript
+import { RequestHandler, IRequestHandler } from "nestjs-mediator"
 
-# e2e tests
-$ npm run test:e2e
+@RequestHandler(Command)
+class TestCommandHandler implements IRequestHandler<TestCommand, string> {
+	handle(data: TestCommand): Promise<string>{
+		//Your logic
+	}
+}
+```
+Don't forget to import your CommandHandler and MediatorModule into your module
+```javascript
+import { MediatorModule } from "nestjs-mediator"
 
-# test coverage
-$ npm run test:cov
+@Module({
+	imports: [MediatorModule],
+	providers: [TestCommandHandler]
+})
+class TestModule{}
+```
+Finally, send your command through the mediator:
+```javascript
+@Controller()
+class TestController {
+	constructor(private mediator: Mediator){}
+	
+	@Post()
+	post(){
+		return this.mediator.send(new TestCommand());
+	}
+}
+```
+###Notification
+Define your notification
+```javascript
+import { Notification } from "nestjs-mediator"
+class TestNotification extends Notification{
+	//Your properties
+}
+```
+and then define many handlers that you want to receive this notification
+```javascript
+import { NotificationHandler, INotificationHandler } from "nestjs-mediator"
+
+@NotificationHandler(TestNotification)
+class TestNotificationHandler1 implements INotificationHandler<TestNotification>{
+	handle(data: TestNotification){
+		//Your logic
+	}
+}
+@NotificationHandler(TestNotification)
+class TestNotificationHandler2 implements INotificationHandler<TestNotification>{
+	handle(data: TestNotification){
+		//Your logic
+	}
+}
 ```
 
-## Support
+Import MediatorModule and your handler the same as above and finally, publish your message via the mediator
+```javascript
+@Controller()
+class TestController {
+	constructor(private mediator: Mediator){}
+	
+	@Post()
+	post(){
+		this.mediator.publish(new TestNotification())
+	}
+}
+```
+###Types
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+`Request<T>` - where T is the returns value
+`RequestHandler<T> `- the decorator where T is your request
+`IRequestHandler<T, U>` - you must implement this interface, T is your request and U is your return value
 
-## Stay in touch
+`Notification`
+`NotificationHandler<T>` - the decorator where T is your notification
+`INotificationHandler<T>` - the interface that you have to implement to publish your notification
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
 
-Nest is [MIT licensed](LICENSE).

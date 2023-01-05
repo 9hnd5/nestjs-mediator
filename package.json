@@ -1,6 +1,6 @@
 {
   "name": "nestjs-mediator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "author": "Huy Nguyen",
   "private": false,
@@ -10,6 +10,10 @@
     "dist/**/*",
     "*.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/9hnd5/nestjs-mediator.git"
+  },
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
