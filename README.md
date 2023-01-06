@@ -24,12 +24,13 @@ or with yarn
 $ yarn add nestjs-mediator
 ```
 
-## Quick Start(or reference in src/example)
-### Request/Response
+## Quick Start(or reference in github example)
+#### Request/Response
 Define your query or command
 ```javascript
 import { Request } from "nestjs-mediator"
-class TestCommand extends Request<string>{
+
+export class TestCommand extends Request<string>{
 	//Your properties
 }
 ```
@@ -39,7 +40,7 @@ Then define your handler
 import { RequestHandler, IRequestHandler } from "nestjs-mediator"
 
 @RequestHandler(TestCommand)
-class TestCommandHandler implements IRequestHandler<TestCommand, string> {
+export class TestCommandHandler implements IRequestHandler<TestCommand, string> {
 	handle(data: TestCommand): Promise<string>{
 		//Your logic
 	}
@@ -53,25 +54,29 @@ import { MediatorModule } from "nestjs-mediator"
 	imports: [MediatorModule],
 	providers: [TestCommandHandler]
 })
+
 class TestModule{}
 ```
 Finally, send your command through the mediator:
 ```javascript
+import { Mediator } from "nestjs-mediator"
+
 @Controller()
-class TestController {
+export class TestController {
 	constructor(private mediator: Mediator){}
-	
+
 	@Post()
 	post(){
 		return this.mediator.send(new TestCommand());
 	}
 }
 ```
-### Notification
+#### Notification
 Define your notification
 ```javascript
 import { Notification } from "nestjs-mediator"
-class TestNotification extends Notification{
+
+export class TestNotification extends Notification{
 	//Your properties
 }
 ```
@@ -80,13 +85,14 @@ and then define many handlers that you want to receive this notification
 import { NotificationHandler, INotificationHandler } from "nestjs-mediator"
 
 @NotificationHandler(TestNotification)
-class TestNotificationHandler1 implements INotificationHandler<TestNotification>{
+export class TestNotificationHandler1 implements INotificationHandler<TestNotification>{
 	handle(data: TestNotification){
 		//Your logic
 	}
 }
+
 @NotificationHandler(TestNotification)
-class TestNotificationHandler2 implements INotificationHandler<TestNotification>{
+export class TestNotificationHandler2 implements INotificationHandler<TestNotification>{
 	handle(data: TestNotification){
 		//Your logic
 	}
@@ -95,17 +101,19 @@ class TestNotificationHandler2 implements INotificationHandler<TestNotification>
 
 Import MediatorModule and your handler the same as above and finally, publish your message via the mediator
 ```javascript
+import { Mediator } from "nestjs-mediator"
+
 @Controller()
-class TestController {
+export class TestController {
 	constructor(private mediator: Mediator){}
-	
+
 	@Post()
 	post(){
 		this.mediator.publish(new TestNotification())
 	}
 }
 ```
-### Types
+#### Types
 
 `Request<T>` - where T is the returns value
 
@@ -118,6 +126,10 @@ class TestController {
 `NotificationHandler<T>` - the decorator where T is your notification
 
 `INotificationHandler<T>` - the interface that you have to implement to publish your notification
+
+## Keywords
+[nestjs-mediator](https://github.com/nestjs/nest), [mediator](https://github.com/nestjs/nest), [command](https://github.com/nestjs/nest), [query](https://github.com/nestjs/nest), [cqrs](https://github.com/nestjs/nest)
+
 
 
 

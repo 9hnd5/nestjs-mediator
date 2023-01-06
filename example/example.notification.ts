@@ -1,5 +1,4 @@
-import { NotificationHandler } from "src/lib/mediator.decorator";
-import { INotificationHandler, Notification } from "src/lib/mediator.service";
+import { NotificationHandler, INotificationHandler, Notification } from 'nestjs-mediator';
 
 export class ExampleNotification extends Notification {}
 

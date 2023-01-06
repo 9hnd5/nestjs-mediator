@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ExampleCommand } from 'src/example/example.command';
-import { ExampleNotification } from 'src/example/example.notification';
-import { Mediator } from 'src/lib/mediator.service';
+import { ExampleCommand } from 'example/example.command';
+import { ExampleNotification } from 'example/example.notification';
+import { Mediator } from 'nestjs-mediator';
 
 @Controller('example')
 export class ExampleController {

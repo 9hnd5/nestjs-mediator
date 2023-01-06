@@ -1,6 +1,4 @@
-import { RequestHandler } from "src/lib/mediator.decorator";
-import { IRequestHandler, Request } from "src/lib/mediator.service";
-
+import { Request, RequestHandler, IRequestHandler } from 'nestjs-mediator';
 export class ExampleCommand extends Request<string> {
   id: string;
 }

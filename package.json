@@ -1,7 +1,7 @@
 {
   "name": "nestjs-mediator",
-  "version": "0.0.3",
-  "description": "Simple mediator for nestjs",
+  "version": "0.0.4",
+  "description": "A simple mediator for nestjs",
   "author": "Huy Nguyen",
   "private": false,
   "main": "dist/index.js",
@@ -47,6 +47,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "nestjs-mediator": "^0.0.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

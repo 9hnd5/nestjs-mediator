@@ -3510,6 +3510,20 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+nestjs-mediator@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/nestjs-mediator/-/nestjs-mediator-0.0.3.tgz#a4fd6cf1f39ebf235334e70ee1061f9cceef0943"
+  integrity sha512-JoDM82lT3nbV+Ovk3rh8niKuCfpqst2eklCEq7gqxBsc2gZYbZTnBosVJN77eduTLOol/ISdTAEaenj2/dLXcA==
+  dependencies:
+    "@nestjs/common" "^9.0.0"
+    "@nestjs/core" "^9.0.0"
+    "@nestjs/platform-express" "^9.0.0"
+    class-transformer "^0.5.1"
+    class-validator "^0.14.0"
+    reflect-metadata "^0.1.13"
+    rimraf "^3.0.2"
+    rxjs "^7.2.0"
+
 node-abort-controller@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/node-abort-controller/-/node-abort-controller-3.0.1.tgz#f91fa50b1dee3f909afabb7e261b1e1d6b0cb74e"
