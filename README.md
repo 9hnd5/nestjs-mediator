@@ -8,10 +8,10 @@
 
 
 ## Motivation
-[Nest](https://github.com/nestjs/nest) has a lightweight CQRS module that works very well but the problem is we can not inject the other provider with **scope-request** and that is the reason why this library has existed
+[NestJS](https://github.com/nestjs/nest) has a lightweight **CQRS** module that works very well but the problem is we can not inject the other provider with **scope-request** and that is the reason why this package has existed
 ## Description
 
-The nestjs-mediator supports request/response, command, query, and notification with exposing the ability to inject any **scope-request** provider
+The **nestjs-mediator **supports request/response, command, query, and notification with exposing the ability to inject any **scope-request** provider
 
 
 ## Installation
@@ -38,7 +38,7 @@ Then define your handler
 ```javascript
 import { RequestHandler, IRequestHandler } from "nestjs-mediator"
 
-@RequestHandler(Command)
+@RequestHandler(TestCommand)
 class TestCommandHandler implements IRequestHandler<TestCommand, string> {
 	handle(data: TestCommand): Promise<string>{
 		//Your logic
@@ -118,7 +118,6 @@ class TestController {
 `NotificationHandler<T>` - the decorator where T is your notification
 
 `INotificationHandler<T>` - the interface that you have to implement to publish your notification
-
 
 
 

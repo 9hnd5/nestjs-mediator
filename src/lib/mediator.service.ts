@@ -2,17 +2,16 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ContextIdFactory, ModuleRef, REQUEST } from '@nestjs/core';
 import 'reflect-metadata';
 
-export abstract class Request<T = any> {
-  private dumb: T;
+abstract class BaseRequest<T = any> {
+  protected returnType: T;
 }
+export abstract class Request<T = any> extends BaseRequest<T> {}
 
 export interface IRequestHandler<TRequest extends Request, TResponse = any> {
   handle(data: TRequest): Promise<TResponse>;
 }
 
-export abstract class Notification {
-  private dumb: 'dumb';
-}
+export abstract class Notification {}
 
 export interface INotificationHandler<TNotification extends Notification> {
   handle(data: TNotification): any;
@@ -22,7 +21,9 @@ export interface INotificationHandler<TNotification extends Notification> {
 export class Mediator {
   constructor(private moduleRef: ModuleRef, @Inject(REQUEST) private request: any) {}
 
-  async send<TRequest extends Request, R = TRequest extends Request<infer X> ? X : unknown>(data: TRequest): Promise<R> {
+  async send<TRequest extends Request, R = TRequest extends Request<infer X> ? X : unknown>(
+    data: TRequest,
+  ): Promise<R> {
     //data is instance and handler is Class type(constructor)
     const handler = Reflect.getMetadata(data.constructor.name, data.constructor);
 
