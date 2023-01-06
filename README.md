@@ -11,7 +11,7 @@
 [NestJS](https://github.com/nestjs/nest) has a lightweight **CQRS** module that works very well but the problem is we can not inject the other provider with **scope-request** and that is the reason why this package has existed
 ## Description
 
-The **nestjs-mediator **supports request/response, command, query, and notification with exposing the ability to inject any **scope-request** provider
+The **nestjs-mediator** supports request/response, command, query, and notification with exposing the ability to inject any **scope-request** provider
 
 
 ## Installation
@@ -24,7 +24,7 @@ or with yarn
 $ yarn add nestjs-mediator
 ```
 
-## Quick Start
+## Quick Start(or reference in src/example)
 ### Request/Response
 Define your query or command
 ```javascript
