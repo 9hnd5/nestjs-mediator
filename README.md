@@ -127,8 +127,6 @@ export class TestController {
 
 `INotificationHandler<T>` - the interface that you have to implement to publish your notification
 
-## Keywords
-[nestjs-mediator](https://github.com/nestjs/nest), [mediator](https://github.com/nestjs/nest), [command](https://github.com/nestjs/nest), [query](https://github.com/nestjs/nest), [cqrs](https://github.com/nestjs/nest)
 
 
 
